@@ -1,0 +1,80 @@
+<!DOCTYPE html><html lang="id"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kontak – Accify</title>
+<link rel="stylesheet" href="../css/pages.css">
+</head><body>
+<header class="header"><nav class="nav">
+  <a href="../../index.html" class="logo"><span class="logo-badge">A</span><span>Accify</span></a>
+  <span style="flex:1"></span>
+  <a href="faq.html" class="link">FAQ</a><a href="terms.html" class="link">S&K</a>
+  <a href="privacy.html" class="link">Privasi</a><a href="contact.html" class="link">Kontak</a>
+  <button class="link" id="themeToggle" title="Ganti tema">🌙</button>
+</nav></header>
+
+<main class="container">
+  <section class="hero">
+    <h1>Kontak</h1>
+    <p class="sub">Butuh bantuan? Kirim pesan melalui formulir di bawah atau chat WA resmi kami.</p>
+  </section>
+
+  <section class="grid section">
+    <div class="card">
+      <form class="form" onsubmit="return false">
+        <div class="two">
+          <label>Nama
+            <input type="text" required placeholder="Nama lengkap">
+          </label>
+          <label>Email
+            <input type="email" required placeholder="nama@email.com" autocomplete="email">
+          </label>
+        </div>
+        <div class="two">
+          <label>WhatsApp
+            <input type="tel" required inputmode="numeric" pattern="^(?:0|\\+62|62)8\\d{7,12}$" placeholder="08xxxxxxxxxx">
+          </label>
+          <label>Topik
+            <select required>
+              <option value="">Pilih topik…</option>
+              <option>Pesanan & Pembayaran</option>
+              <option>Garansi / Refund</option>
+              <option>Permintaan Privasi</option>
+              <option>Kerja Sama</option>
+              <option>Lainnya</option>
+            </select>
+          </label>
+        </div>
+        <label>Kode Transaksi (opsional)
+          <input type="text" placeholder="SBY-XXXXXX">
+        </label>
+        <label>Pesan
+          <textarea rows="6" required placeholder="Ceritakan kendalamu dengan jelas…"></textarea>
+        </label>
+        <div style="display:flex; gap:10px; align-items:center">
+          <button class="btn" type="submit">Kirim Pesan</button>
+          <span class="badge">Respon 09.00–21.00 WIB</span>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>Kontak Resmi</h2>
+      <p class="sub">Silakan simpan agar tidak salah tujuan.</p>
+      <table class="table" style="margin-top:10px">
+        <tbody>
+          <tr><td>WhatsApp</td><td><a href="#" aria-disabled="true">+62 8xxx-xxxx-xxx</a></td></tr>
+          <tr><td>Email</td><td>support@accify.id</td></tr>
+          <tr><td>Jam Operasional</td><td>Senin–Minggu, 09.00–21.00 WIB</td></tr>
+          <tr><td>Alamat</td><td>Online operation (Indonesia)</td></tr>
+        </tbody>
+      </table>
+      <p class="sub" style="margin-top:10px">Untuk pertanyaan media/kerja sama, tulis subjek email: <span class="kbd">[PARTNERSHIP]</span></p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer"><div class="footer-inner">
+  <p>© 2025 Accify</p>
+  <nav class="footer-nav"><a href="faq.html">FAQ</a><a href="terms.html">S&K</a><a href="privacy.html">Privasi</a><a href="contact.html">Kontak</a></nav>
+</div></footer>
+<script src="../js/theme.js"></script>
+</body></html>
