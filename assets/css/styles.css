@@ -270,4 +270,63 @@ h3{margin:6px 0 10px}
 /* Teks abu di tempat lain */
 :root[data-theme="light"] .sub{ color:#465775; }
 
+/* ====== MOBILE POLISH PACK (≤ 640px) ====== */
+@media (max-width: 640px){
+
+  /* NAV nyaman & anti-zoom iOS */
+  .nav-inner{ padding:10px 12px; gap:10px }
+  .search input{ font-size:16px; padding:10px 36px 10px 34px }
+
+  /* ==== BANNER: gambar di atas, teks di bawah (no overlap) ==== */
+  .promo{ margin:12px 0 16px; border-radius:14px; overflow:hidden }
+  .promo picture{ display:block; max-height:220px; overflow:hidden }
+  .promo img{ width:100%; height:auto; display:block }
+  .promo-text{
+    position:relative;     /* tadinya absolute → bikin numpuk */
+    inset:auto;            /* reset posisi */
+    background:transparent;/* hilangkan overlay agar teks jelas */
+    padding:12px 14px 0;
+  }
+  .promo-text h1{
+    font-size:clamp(20px, 5.2vw + 8px, 26px);
+    line-height:1.15; margin:0 0 6px;
+  }
+  .promo-text p{
+    font-size:14px; line-height:1.55; margin:0 0 10px; color:var(--sub);
+  }
+  .promo-text .btn{ width:100%; text-align:center }  /* CTA lebar penuh */
+
+  /* ==== Section hero/kartu ==== */
+  .hero{ padding:16px }
+  .section-title{ font-size:20px }
+
+  /* Grid produk: 2 kolom → 1 kolom di layar kecil banget */
+  .grid{ grid-template-columns:repeat(2, minmax(0,1fr)); gap:12px }
+}
+@media (max-width: 380px){
+  .promo picture{ max-height:180px }
+  .grid{ grid-template-columns:1fr }
+}
+
+/* ====== Kartu produk & teks agar tidak pecah layout ====== */
+.product .p-name{ font-size:15px; line-height:1.25 }
+.product .p-brand{ font-size:12px }
+.tag{ font-size:11px }
+.summary-item span{ word-break:break-word }
+.code{ word-break:break-all }
+
+/* ====== Modal/Drawer nyaman di hp ====== */
+.modal-card{ width:min(92vw, 720px); padding:16px }
+.modal-card.wide{ width:min(95vw, 980px) }
+.drawer{ width:min(92vw, 380px) }
+
+/* ====== Payment grid & QR size ====== */
+.payview{ grid-template-columns:1fr }                 /* stack di hp */
+.pay-steps{ font-size:13px }
+.qr-box{ height:220px }
+.qr{ width:180px; height:180px }
+
+/* ==== Kurangi efek berat di mobile (hindari ghost/duplikasi) ==== */
+.header{ backdrop-filter:none; background:rgba(11,14,20,.9) }
+
 
