@@ -205,3 +205,109 @@ h3{margin:6px 0 10px}
 @media (max-width: 380px){
   .promo picture{ max-height:180px }
 }
+
+/* ========== NAV: cegah tumpang tindih ==========
+   - Search melebar fleksibel
+   - Icon/Checkout mengecil & tetap rapi
+   - Boleh turun 2 baris di layar kecil
+================================================= */
+.header, nav, .navbar, .topbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;            /* biar boleh turun baris */
+}
+
+.header .brand, .navbar .brand, .logo {
+  flex: 0 0 auto;
+}
+
+.header .search, .navbar .search, .searchbar {
+  flex: 1 1 220px;            /* search yang fleksibel */
+  min-width: 0;
+}
+.header .search input,
+.navbar .search input,
+.searchbar input {
+  width: 100%;
+}
+
+.header .cart, .header .checkout,
+.navbar .cart, .navbar .checkout,
+.actions .cart, .actions .checkout {
+  flex: 0 0 auto;
+  white-space: nowrap;        /* teks tombol nggak pecah */
+}
+
+/* Kompres tombol di mobile */
+@media (max-width: 480px) {
+  .header, nav, .navbar, .topbar { gap: 8px; }
+  .btn.checkout, .checkout {
+    padding: 8px 10px;
+    font-size: .875rem;
+  }
+  .badge { transform: translateY(-1px); }
+}
+
+/* ==========
+   HERO/BANNER: biar utuh di mobile
+   Pakai salah satu sesuai strukturmu:
+   1) Kalau gambar <img> di dalam .hero
+   2) Kalau banner pakai background-image
+================================================= */
+
+/* 1) <img> di dalam .hero */
+.hero img,
+.hero-banner img {
+  display: block;
+  width: 100%;
+  height: auto;               /* cegah terpotong */
+  border-radius: 16px;
+}
+
+/* 2) Elemen banner pakai background-image */
+.hero, .hero-banner, .banner {
+  background-position: center;
+  background-repeat: no-repeat;
+}
+/* Di layar kecil, jangan 'cover' (bikin kepotong), pakai 'contain' */
+@media (max-width: 640px) {
+  .hero, .hero-banner, .banner { 
+    background-size: contain; /* tampil penuh, tidak crop */
+    min-height: 220px;        /* tinggi minimal agar teks muat */
+  }
+}
+
+/* ==========
+   TYPOGRAFI: judul fleksibel supaya tidak dorong layout
+================================================= */
+h1.hero-title, .hero h1, .title-xl {
+  font-size: clamp(28px, 6vw, 56px);
+  line-height: 1.15;
+  margin: 0 0 8px;
+}
+.hero p.sub, .subtitle, .lead {
+  font-size: clamp(14px, 3.6vw, 18px);
+  line-height: 1.5;
+  opacity: .9;
+}
+
+/* ==========
+   CONTAINER & SPACING
+================================================= */
+.container, .section, .hero-content {
+  padding-inline: clamp(12px, 4vw, 24px);
+}
+
+/* ==========
+   BARIS AKSI DI BAWAH NAV (opsional)
+   Kalau ruang sempit banget, paksa actions turun penuh
+================================================= */
+@media (max-width: 380px) {
+  .header .actions, .navbar .actions {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+  }
+  .header .search, .navbar .search { flex-basis: 100%; }
+}
