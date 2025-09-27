@@ -206,108 +206,71 @@ h3{margin:6px 0 10px}
   .promo picture{ max-height:180px }
 }
 
-/* ========== NAV: cegah tumpang tindih ==========
-   - Search melebar fleksibel
-   - Icon/Checkout mengecil & tetap rapi
-   - Boleh turun 2 baris di layar kecil
-================================================= */
-.header, nav, .navbar, .topbar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;            /* biar boleh turun baris */
+/* ===== Header: Grid layout agar rapi di mobile & anti overflow ===== */
+html, body { overflow-x: hidden; }                     /* stop geser horizontal */
+
+.nav { max-width: 100vw; }
+.nav-inner{
+  display:grid;
+  grid-template-columns:auto 1fr auto;                 /* desktop: logo | search | actions */
+  grid-template-areas:"logo search actions";
+  align-items:center; gap:12px; padding:12px 16px;
+  max-width:100vw;
+  backdrop-filter:saturate(1.1) blur(10px);
+  background:rgba(11,14,20,.65);
+  border-bottom:1px solid var(--line);
 }
 
-.header .brand, .navbar .brand, .logo {
-  flex: 0 0 auto;
-}
+/* area assignment */
+.logo{ grid-area:logo; display:flex; align-items:center; gap:10px; cursor:pointer; }
+.search{ grid-area:search; min-width:0; position:relative; }   /* <-- penting */
+.actions{ grid-area:actions; display:flex; gap:10px; flex:0 0 auto; }
 
-.header .search, .navbar .search, .searchbar {
-  flex: 1 1 220px;            /* search yang fleksibel */
-  min-width: 0;
+/* search input & icon */
+.search input{
+  width:100%; min-width:0;
+  background:var(--card); border:1px solid var(--line); color:var(--text);
+  padding:12px 14px 12px 40px; border-radius:12px; outline:none;
 }
-.header .search input,
-.navbar .search input,
-.searchbar input {
-  width: 100%;
-}
+.search svg{ position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--sub); }
 
-.header .cart, .header .checkout,
-.navbar .cart, .navbar .checkout,
-.actions .cart, .actions .checkout {
-  flex: 0 0 auto;
-  white-space: nowrap;        /* teks tombol nggak pecah */
-}
+/* tombol jangan memaksa lebar */
+.btn, .icon-btn{ min-width:auto; }
 
-/* Kompres tombol di mobile */
-@media (max-width: 480px) {
-  .header, nav, .navbar, .topbar { gap: 8px; }
-  .btn.checkout, .checkout {
-    padding: 8px 10px;
-    font-size: .875rem;
+/* ===== Mobile: baris 1 = logo + actions, baris 2 = search penuh ===== */
+@media (max-width: 640px){
+  .nav-inner{
+    grid-template-columns:auto auto;
+    grid-template-areas:
+      "logo actions"
+      "search search";
+    gap:10px; padding:10px 12px;
+    backdrop-filter:none; background:rgba(11,14,20,.9);
   }
-  .badge { transform: translateY(-1px); }
+  .actions{ justify-self:end; gap:8px; }
+  .actions .btn{ padding:8px 10px; font-size:14px; }
+  .search input{ font-size:16px; padding:10px 12px 10px 36px; } /* anti zoom iOS */
 }
 
-/* ==========
-   HERO/BANNER: biar utuh di mobile
-   Pakai salah satu sesuai strukturmu:
-   1) Kalau gambar <img> di dalam .hero
-   2) Kalau banner pakai background-image
-================================================= */
-
-/* 1) <img> di dalam .hero */
-.hero img,
-.hero-banner img {
-  display: block;
-  width: 100%;
-  height: auto;               /* cegah terpotong */
-  border-radius: 16px;
-}
-
-/* 2) Elemen banner pakai background-image */
-.hero, .hero-banner, .banner {
-  background-position: center;
-  background-repeat: no-repeat;
-}
-/* Di layar kecil, jangan 'cover' (bikin kepotong), pakai 'contain' */
-@media (max-width: 640px) {
-  .hero, .hero-banner, .banner { 
-    background-size: contain; /* tampil penuh, tidak crop */
-    min-height: 220px;        /* tinggi minimal agar teks muat */
+/* ===== Banner tidak overlap & tidak terpotong di hp ===== */
+@media (max-width: 640px){
+  .promo{ margin:12px 0 16px; border-radius:14px; overflow:hidden; }
+  .promo picture{ display:block; }
+  .promo img{ width:100%; height:auto; display:block; object-fit:cover; }
+  .promo-text{
+    position:relative; inset:auto; background:transparent; padding:12px 14px 0;
   }
+  .promo-text h1{ font-size:clamp(20px,5vw + 8px,26px); line-height:1.15; margin:0 0 6px; }
+  .promo-text p{ font-size:14px; line-height:1.55; margin:0 0 10px; }
+  .promo-text .btn{ width:100%; text-align:center; }
 }
 
-/* ==========
-   TYPOGRAFI: judul fleksibel supaya tidak dorong layout
-================================================= */
-h1.hero-title, .hero h1, .title-xl {
-  font-size: clamp(28px, 6vw, 56px);
-  line-height: 1.15;
-  margin: 0 0 8px;
-}
-.hero p.sub, .subtitle, .lead {
-  font-size: clamp(14px, 3.6vw, 18px);
-  line-height: 1.5;
-  opacity: .9;
-}
+/* Grid produk aman di hp kecil */
+@media (max-width: 640px){ .grid{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px } }
+@media (max-width: 380px){ .grid{ grid-template-columns:1fr } }
 
-/* ==========
-   CONTAINER & SPACING
-================================================= */
-.container, .section, .hero-content {
-  padding-inline: clamp(12px, 4vw, 24px);
-}
-
-/* ==========
-   BARIS AKSI DI BAWAH NAV (opsional)
-   Kalau ruang sempit banget, paksa actions turun penuh
-================================================= */
-@media (max-width: 380px) {
-  .header .actions, .navbar .actions {
-    width: 100%;
-    display: flex;
-    gap: 8px;
-  }
-  .header .search, .navbar .search { flex-basis: 100%; }
-}
+/* Kontainer & section tidak meluber */
+.container{ max-width:1180px; margin:0 auto; padding:0 12px; box-sizing:border-box; }
+.promo, .hero, .section{ max-width:100%; }
+.summary-item span{ word-break:break-word; }
+.code{ word-break:break-all; }
