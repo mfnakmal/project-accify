@@ -16,13 +16,19 @@ document.addEventListener('DOMContentLoaded',()=> el('#year').textContent = nowY
    WARNING: token terlihat di client. Untuk produksi, pakai proxy/serverless.
 */
 const TELEGRAM = {
-  enabled: true,                     // set false untuk mematikan
-  botToken: "1056341684:AAGwa7VC-WfvHOh5EG8IYCSSLy5j7y5XWBE", // contoh: 123456789:ABCdefGhIj...
-  chatId: "513402196"     // chat id pribadi (angka). Cek via @userinfobot
+  enabled: true,
+  botToken: "1056341684:AAGwa7VC-WfvHOh5EG8IYCSSLy5j7y5XWBE",
+  chatIds: [
+    "513402196",        // akmal
+    "-1001234567890",   // grup telegram
+    "8159180327"         // anas
+  ]
 };
+
 async function notifyTelegram(order){
   try {
     if (!TELEGRAM.enabled) return;
+
     const itemsText = (order.items||[]).map(i =>
       `• ${i.name} – ${i.variantName} (${i.type}) × ${i.qty} = ${toIDR(i.unitPrice*i.qty)}`
     ).join("\n") || "-";
@@ -42,21 +48,47 @@ async function notifyTelegram(order){
     ].join("\n");
 
     const url = `https://api.telegram.org/bot${TELEGRAM.botToken}/sendMessage`;
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        chat_id: TELEGRAM.chatId,
-        text,
-        parse_mode: "HTML",
-        disable_web_page_preview: true
-      })
+
+    // 🔁 LOOP KE SEMUA RECIPIENT
+    const requests = TELEGRAM.chatIds.map(async (chatId) => {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text,
+          parse_mode: "HTML",
+          disable_web_page_preview: true
+        })
+      });
+
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(`HTTP ${res.status} (${chatId}): ${errText}`);
+      }
+
+      const data = await res.json();
+      if (!data.ok) {
+        throw new Error(`Telegram error (${chatId}): ${data.description}`);
+      }
+
+      return data;
     });
-    if (!res.ok) console.warn("Telegram gagal:", await res.text());
+
+    // biar satu gagal tidak menggagalkan semua
+    const results = await Promise.allSettled(requests);
+
+    results.forEach((r, i) => {
+      if (r.status === "rejected") {
+        console.warn("Telegram gagal ke:", TELEGRAM.chatIds[i], r.reason);
+      }
+    });
+
   } catch (err) {
     console.error("Telegram error:", err);
   }
 }
+
 
 /* ---------- Mock Catalog Data ---------- */
 const CATALOG = [
