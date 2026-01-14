@@ -20,7 +20,7 @@ const TELEGRAM = {
   botToken: "1056341684:AAGwa7VC-WfvHOh5EG8IYCSSLy5j7y5XWBE",
   chatIds: [
     "513402196",        // akmal
-    "-1001234567890",   // grup telegram
+    "6337153193",   // zaki
     "8159180327"         // anas
   ]
 };
@@ -557,3 +557,4 @@ function openPaymentView({orderId, method, amount, email, wa}){
     refreshCartUI();
   };
 }
+
